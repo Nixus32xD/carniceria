@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -14,6 +15,13 @@ Route::get('/', function () {
     ]);
 });
 
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard/products',[ProductsController::class, 'index'] )->name('products.index');
+    Route::post('/dashboard/products',[ProductsController::class, 'store'] )->name('products.store');
+    Route::put('/dashboard/products/{id}/update',[ProductsController::class, 'update'] )->name('products.update');
+    Route::delete('/dashboard/product/{id}/delete', [ProductsController::class, 'destroy'] )->name('products.destroy');
+});
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -24,4 +32,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
