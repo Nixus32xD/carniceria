@@ -14,7 +14,9 @@ class Product extends Model
         'stock',
         'price',
         'offerPrice',
-        'discount'
+        'discount',
+        'image_alt',
+        'image'
     ];
 
     protected $casts = [

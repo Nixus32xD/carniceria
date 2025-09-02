@@ -21,6 +21,8 @@ return new class extends Migration
             $table->decimal('price', 10, 2)->default(0.00);
             $table->decimal('offerPrice', 10, 2)->nullable();
             $table->integer('discount')->nullable();
+            $table->string('image_alt')->nullable();
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

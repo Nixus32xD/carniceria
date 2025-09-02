@@ -13,26 +13,46 @@ const showingNavigationDropdown = ref(false);
 <template>
     <div>
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-            <nav class="border-b border-gray-100 bg-white dark:border-gray-700 dark:bg-gray-800">
+            <!-- Enhanced navigation with more red tones and additional menu items -->
+            <nav
+                class="border-b border-red-200 bg-gradient-to-r from-red-50 to-white dark:border-red-700 dark:from-gray-800 dark:to-red-900">
                 <!-- Primary Navigation Menu -->
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div class="flex h-16 justify-between">
                         <div class="flex">
                             <!-- Logo -->
-                            <div class="flex shrink-0 items-center">
+                            <!-- <div class="flex shrink-0 items-center">
                                 <Link :href="route('dashboard')">
                                 <ApplicationLogo
                                     class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
                                 </Link>
+                            </div> -->
+                            <div class="flex items-center">
+                                <Link :href="route('home')" class="flex-shrink-0">
+                                    <!-- agregando más tonos de rojo al logo -->
+                                    <h1
+                                        class="text-2xl font-bold bg-gradient-to-r from-red-600 to-red-800 bg-clip-text text-transparent">
+                                        🥩 Carnicería El Buen Corte</h1>
+                                </Link>
                             </div>
 
-                            <!-- Navigation Links -->
+                            <!-- Enhanced navigation links with red hover effects -->
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                                <NavLink :href="route('dashboard')" :active="route().current('dashboard')"
+                                    class="hover:text-red-600 hover:border-red-300 transition-colors duration-200">
                                     Dashboard
                                 </NavLink>
-                                <NavLink :href="route('products.index')" :active="route().current('products.index')">
+                                <NavLink :href="route('products.index')" :active="route().current('products.index')"
+                                    class="hover:text-red-600 hover:border-red-300 transition-colors duration-200">
                                     Productos
+                                </NavLink>
+                                <NavLink :href="route('sales.index')" :active="route().current('sales.index')"
+                                    class="hover:text-red-600 hover:border-red-300 transition-colors duration-200">
+                                    Ventas
+                                </NavLink>
+                                <NavLink :href="route('analytics.index')" :active="route().current('analytics.index')"
+                                    class="hover:text-red-600 hover:border-red-300 transition-colors duration-200">
+                                    Estadísticas
                                 </NavLink>
                             </div>
                         </div>
@@ -43,10 +63,10 @@ const showingNavigationDropdown = ref(false);
                                 <Dropdown align="right" width="48">
                                     <template #trigger>
                                         <span class="inline-flex rounded-md">
+                                            <!-- Enhanced user button with red hover effects -->
                                             <button type="button"
-                                                class="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none dark:bg-gray-800 dark:text-gray-400 dark:hover:text-gray-300">
+                                                class="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-red-600 hover:bg-red-50 focus:outline-none dark:bg-gray-800 dark:text-gray-400 dark:hover:text-red-300 dark:hover:bg-red-900">
                                                 {{ $page.props.auth.user.name }}
-
                                                 <svg class="-me-0.5 ms-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg"
                                                     viewBox="0 0 20 20" fill="currentColor">
                                                     <path fill-rule="evenodd"
@@ -59,10 +79,10 @@ const showingNavigationDropdown = ref(false);
 
                                     <template #content>
                                         <DropdownLink :href="route('profile.edit')">
-                                            Profile
+                                            Perfil
                                         </DropdownLink>
                                         <DropdownLink :href="route('logout')" method="post" as="button">
-                                            Log Out
+                                            Cerrar Sesión
                                         </DropdownLink>
                                     </template>
                                 </Dropdown>
@@ -71,22 +91,17 @@ const showingNavigationDropdown = ref(false);
 
                         <!-- Hamburger -->
                         <div class="-me-2 flex items-center sm:hidden">
-                            <button @click="
-                                showingNavigationDropdown =
-                                !showingNavigationDropdown
-                                "
+                            <button @click="showingNavigationDropdown = !showingNavigationDropdown"
                                 class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 transition duration-150 ease-in-out hover:bg-gray-100 hover:text-gray-500 focus:bg-gray-100 focus:text-gray-500 focus:outline-none dark:text-gray-500 dark:hover:bg-gray-900 dark:hover:text-gray-400 dark:focus:bg-gray-900 dark:focus:text-gray-400">
                                 <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                                     <path :class="{
                                         hidden: showingNavigationDropdown,
-                                        'inline-flex':
-                                            !showingNavigationDropdown,
+                                        'inline-flex': !showingNavigationDropdown,
                                     }" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M4 6h16M4 12h16M4 18h16" />
                                     <path :class="{
                                         hidden: !showingNavigationDropdown,
-                                        'inline-flex':
-                                            showingNavigationDropdown,
+                                        'inline-flex': showingNavigationDropdown,
                                     }" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M6 18L18 6M6 6l12 12" />
                                 </svg>
@@ -104,6 +119,16 @@ const showingNavigationDropdown = ref(false);
                         <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                             Dashboard
                         </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('products.index')" :active="route().current('products.index')">
+                            Productos
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('sales.index')" :active="route().current('sales.index')">
+                            Ventas
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('analytics.index')"
+                            :active="route().current('analytics.index')">
+                            Estadísticas
+                        </ResponsiveNavLink>
                     </div>
 
                     <!-- Responsive Settings Options -->
@@ -119,10 +144,10 @@ const showingNavigationDropdown = ref(false);
 
                         <div class="mt-3 space-y-1">
                             <ResponsiveNavLink :href="route('profile.edit')">
-                                Profile
+                                Perfil
                             </ResponsiveNavLink>
                             <ResponsiveNavLink :href="route('logout')" method="post" as="button">
-                                Log Out
+                                Cerrar Sesión
                             </ResponsiveNavLink>
                         </div>
                     </div>
