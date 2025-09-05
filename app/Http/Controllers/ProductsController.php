@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Cut;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -12,10 +14,13 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
-
+        $products = Product::with(['category', 'cut'])->get();
+        $cuts = Cut::all();
+        $categories = Category::all();
         return inertia('Products/Products', [
-            'products' => $products
+            'products' => $products,
+            'cuts' => $cuts,
+            'categories' => $categories
         ]);
     }
 
@@ -40,6 +45,8 @@ class ProductsController extends Controller
             // Si hay oferta, el descuento es obligatorio
             'discount'    => 'nullable|numeric|min:0|max:100',
             'offerPrice'  => 'nullable|numeric|min:0',
+            'category_id' => 'required|exists:categories,id',
+            'cut_id'      => 'required|exists:cuts,id',
         ]);
 
         // 🔹 Reglas extra en backend (por seguridad)
@@ -96,6 +103,8 @@ class ProductsController extends Controller
             // Si hay oferta, el descuento es obligatorio
             'discount'    => 'nullable|numeric|min:0|max:100',
             'offerPrice'  => 'nullable|numeric|min:0',
+            'category_id' => 'required|exists:categories,id',
+            'cut_id'      => 'required|exists:cuts,id',
         ]);
 
         // 🔹 Reglas extra en backend (por seguridad)

@@ -3,13 +3,19 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, Link } from '@inertiajs/vue3';
 import axios from 'axios';
 import { reactive, computed, ref, watch } from 'vue';
+import Category from './Category.vue';
+import Cuts from './Cuts.vue';
 
 const props = defineProps({
     products: Array, // Assuming you pass products as a prop
-    message: String
+    message: String,
+    categories: Array,
+    cuts: Array,
 });
-
+const categories = ref([...props.categories])
+const cutsMutable = ref([...props.cuts])
 const createModal = ref(false);
+
 const message = ref('');
 const productList = ref([...props.products])
 const isEditMode = ref(false)
@@ -28,6 +34,8 @@ const form = reactive({
     price: null,
     offerPrice: null,  // este se calcula si hay descuento
     discount: null,
+    cut_id: null,       // nuevo
+    category_id: null,  // nuevo
 })
 //watch para controlar el checkbox de isActive segun el stock
 watch(() => form.stock, (newStock, oldStock) => {
@@ -53,9 +61,10 @@ const filteredProducts = computed(() => {
     let filtered = productList.value;
 
     if (searchTerm.value) {
+        const term = searchTerm.value.toLowerCase();
         filtered = filtered.filter(product =>
-            product.name.toLowerCase().includes(searchTerm.value.toLowerCase()) ||
-            product.description.toLowerCase().includes(searchTerm.value.toLowerCase())
+            (product.name || '').toLowerCase().includes(term) ||
+            (product.description || '').toLowerCase().includes(term)
         );
     }
 
@@ -76,7 +85,6 @@ const filteredProducts = computed(() => {
 
 async function submitForm() {
 
-
     if (form.isOffer && form.discount) {
         form.offerPrice = finalPrice.value;
     } else {
@@ -86,7 +94,6 @@ async function submitForm() {
     try {
         if (isEditMode.value) {
             //UPDATE
-
             const response = await axios.put(`/dashboard/products/${editingProductId.value}/update`, form);
             message.value = response.data.message;
 
@@ -109,7 +116,28 @@ async function submitForm() {
         closeCreateModal();
         setTimeout(() => (message.value = ''), 3000);
     }
+}
+function updateCategories(cat) {
+    const index = categories.value.findIndex(c => c.id === cat.id)
+    if (index !== -1) {
+        // Para reactividad profunda, crea un nuevo objeto
+        categories.value.splice(index, 1, { ...cat })
+    } else {
+        categories.value.push(cat)
+    }
+    syncCutsWithCategories(cat)
+}
 
+function syncCutsWithCategories(cat) {
+    cutsMutable.value.forEach((cut, index) => {
+        if (cut.category_id === cat.id) {
+            // Actualizar con reactividad
+            cutsMutable.value[index] = {
+                ...cut,
+                category: { ...cat }
+            }
+        }
+    });
 }
 
 function resetForm() {
@@ -144,6 +172,8 @@ function openEditModal(product) {
     form.price = product.price;
     form.discount = product.discount;
     form.offerPrice = product.offerPrice;
+    form.cut_id = product.cut_id
+    form.category_id = product.category_id
 
     isEditMode.value = true;
     editingProductId.value = product.id;
@@ -224,7 +254,8 @@ function confirmDelete(id) {
                             <button @click="openCreateModal()"
                                 class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg hover:from-red-700 hover:to-red-800 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-all duration-200 shadow-lg">
                                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                                 </svg>
                                 Crear Producto
                             </button>
@@ -232,39 +263,68 @@ function confirmDelete(id) {
 
                         <div class="overflow-x-auto">
                             <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                                <thead class="bg-gradient-to-r from-red-50 to-red-100 dark:from-gray-700 dark:to-gray-600">
+                                <thead
+                                    class="bg-gradient-to-r from-red-50 to-red-100 dark:from-gray-700 dark:to-gray-600">
                                     <tr>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-red-800 dark:text-gray-300 uppercase tracking-wider">ID</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-red-800 dark:text-gray-300 uppercase tracking-wider">Nombre</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-red-800 dark:text-gray-300 uppercase tracking-wider">Precio x Kilo</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-red-800 dark:text-gray-300 uppercase tracking-wider">Stock</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-red-800 dark:text-gray-300 uppercase tracking-wider">Descuento</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-red-800 dark:text-gray-300 uppercase tracking-wider">Estado</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-red-800 dark:text-gray-300 uppercase tracking-wider">Acciones</th>
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-red-800 dark:text-gray-300 uppercase tracking-wider">
+                                            ID</th>
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-red-800 dark:text-gray-300 uppercase tracking-wider">
+                                            Nombre</th>
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-red-800 dark:text-gray-300 uppercase tracking-wider">
+                                            Precio x Kilo</th>
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-red-800 dark:text-gray-300 uppercase tracking-wider">
+                                            Stock</th>
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-red-800 dark:text-gray-300 uppercase tracking-wider">
+                                            Descuento</th>
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-red-800 dark:text-gray-300 uppercase tracking-wider">
+                                            Estado</th>
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-red-800 dark:text-gray-300 uppercase tracking-wider">
+                                            Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
-                                    <tr v-for="product in filteredProducts" :key="product.id" class="hover:bg-red-50 dark:hover:bg-gray-700 transition-colors">
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100">#{{ product.id }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100">{{ product.name }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
-                                            <span v-if="product.isOffer" class="text-red-600 font-semibold">${{ product.offerPrice }}</span>
+                                    <tr v-for="product in filteredProducts" :key="product.id"
+                                        class="hover:bg-red-50 dark:hover:bg-gray-700 transition-colors">
+                                        <td
+                                            class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100">
+                                            #{{ product.id }}</td>
+                                        <td
+                                            class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100">
+                                            {{ product.name }}</td>
+                                        <td
+                                            class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                                            <span v-if="product.isOffer" class="text-red-600 font-semibold">${{
+                                                product.offerPrice }}</span>
                                             <span v-else class="font-semibold">${{ product.price }}</span>
-                                            <span v-if="product.isOffer" class="text-gray-400 line-through ml-2">${{ product.price }}</span>
+                                            <span v-if="product.isOffer" class="text-gray-400 line-through ml-2">${{
+                                                product.price }}</span>
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
-                                            <span :class="product.stock <= 5 ? 'text-red-600 font-semibold' : 'text-green-600'">
+                                        <td
+                                            class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                                            <span
+                                                :class="product.stock <= 5 ? 'text-red-600 font-semibold' : 'text-green-600'">
                                                 {{ product.stock }} kg
                                             </span>
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
-                                            <span v-if="product.isOffer" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                        <td
+                                            class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                                            <span v-if="product.isOffer"
+                                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
                                                 {{ product.discount }}% OFF
                                             </span>
                                             <span v-else class="text-gray-400">Sin descuento</span>
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
-                                            <span :class="product.isActive ? 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800' : 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800'">
+                                        <td
+                                            class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                                            <span
+                                                :class="product.isActive ? 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800' : 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800'">
                                                 {{ product.isActive ? "Activo" : "Inactivo" }}
                                             </span>
                                         </td>
@@ -282,7 +342,35 @@ function confirmDelete(id) {
                                 </tbody>
                             </table>
                         </div>
+                        <!-- Componente Modal Categoría -->
+                        <Category :categories="categories" @created="cat => categories.push(cat)" @updated="cat => {
+                            const i = categories.findIndex(c => c.id === cat.id)
+                            if (i !== -1) categories[i] = cat
+                            syncCutsWithCategories(cat) // 🔹 sincronizamos cortes
+                        }" @deleted="id => {
+                            const index = categories.findIndex(c => c.id === id)
+                            if (index !== -1) categories.splice(index, 1)
+
+                            // 🔹 Si se elimina la categoría, removemos la referencia en los cortes
+                            cutsMutable.value.forEach(cut => {
+                                if (cut.category_id === id) cut.category_id = null
+                            })
+                        }" />
+
+
+                        <!-- Componente Modal Corte -->
+                        <Cuts :cuts="cuts" :categories="categories" @created="cut => cuts.push(cut)" @updated="cut => {
+                            const i = cuts.findIndex(c => c.id === cut.id)
+                            if (i !== -1) cuts[i] = cut
+                        }" @deleted="id => {
+                            const index = cuts.findIndex(c => c.id === id)
+                            if (index !== -1) cuts.splice(index, 1) // ✅ muta el array
+                        }" />
+
+
+
                     </div>
+
                 </div>
             </div>
         </div>
@@ -369,6 +457,34 @@ function confirmDelete(id) {
                         </div>
 
                         <div class="mb-4 mx-10">
+                            <label class="block text-white text-sm font-bold mb-2" for="category_id">
+                                Categoría
+                            </label>
+                            <select v-model="form.category_id"
+                                class="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline dark:text-black"
+                                id="category_id">
+                                <option disabled value="">-- Seleccionar categoría --</option>
+                                <option v-for="cat in categories" :key="cat.id" :value="cat.id">
+                                    {{ cat.name }}
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="mb-4 mx-10">
+                            <label class="block text-white text-sm font-bold mb-2" for="cut_id">
+                                Corte
+                            </label>
+                            <select v-model="form.cut_id"
+                                class="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline dark:text-black"
+                                id="cut_id">
+                                <option disabled value="">-- Seleccionar corte --</option>
+                                <option v-for="cut in cuts" :key="cut.id" :value="cut.id">
+                                    {{ cut.name }}
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="mb-4 mx-10">
                             <span class="mr-2 text-sm text-gray-600 dark:text-white">Esta Activo</span>
                             <input type="checkbox" v-model="form.isActive" id="isActive" class="mr-2">
                         </div>
@@ -385,5 +501,6 @@ function confirmDelete(id) {
                 </div>
             </div>
         </transition>
+
     </AuthenticatedLayout>
 </template>

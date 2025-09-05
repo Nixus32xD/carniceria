@@ -1,4 +1,5 @@
 <template>
+    <Head title="Inicio" />
     <div class="min-h-screen bg-background">
         <!-- Navigation Header -->
         <header class="bg-card border-b border-border shadow-sm">
@@ -7,10 +8,10 @@
                     <!-- Logo -->
                     <div class="flex items-center">
                         <Link :href="route('home')" class="flex-shrink-0">
-                            <!-- agregando más tonos de rojo al logo -->
-                            <h1
-                                class="text-2xl font-bold bg-gradient-to-r from-red-600 to-red-800 bg-clip-text text-transparent">
-                                🥩 Carnicería El Buen Corte</h1>
+                        <!-- agregando más tonos de rojo al logo -->
+                        <h1
+                            class="text-2xl font-bold bg-gradient-to-r from-red-600 to-red-800 bg-clip-text text-transparent">
+                            🥩 Carnicería El Buen Corte</h1>
                         </Link>
                     </div>
 
@@ -99,44 +100,41 @@
             </div>
         </section>
 
-        <!-- Filters Section -->
+        <!-- Filters Section - ACTUALIZADO -->
         <section class="bg-red-50/30">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <div class="bg-card rounded-lg p-6 shadow-sm border border-red-100">
-                    <!-- título de filtros con tono de rojo -->
                     <h3 class="text-lg font-semibold text-red-800 mb-4">Filtrar Productos</h3>
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                        <!-- Category Filter -->
+                        <!-- Category Filter - ACTUALIZADO -->
                         <div>
                             <label class="block text-sm font-medium text-red-700 mb-2">Categoría</label>
                             <select v-model="selectedCategory"
                                 class="w-full px-3 py-2 bg-input border border-red-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500">
                                 <option value="">Todas las categorías</option>
-                                <option value="res">Carne de Res</option>
-                                <option value="cerdo">Carne de Cerdo</option>
-                                <option value="pollo">Pollo</option>
-                                <option value="embutidos">Embutidos</option>
+                                <option v-for="category in categories" :key="category.id" :value="category.id">
+                                    {{ category.name }}
+                                </option>
                             </select>
                         </div>
 
-                        <!-- Cut Filter -->
+                        <!-- Cut Filter - ACTUALIZADO -->
                         <div>
                             <label class="block text-sm font-medium text-red-700 mb-2">Tipo de Corte</label>
                             <select v-model="selectedCut"
                                 class="w-full px-3 py-2 bg-input border border-red-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500">
                                 <option value="">Todos los cortes</option>
-                                <option value="premium">Premium</option>
-                                <option value="especial">Especial</option>
-                                <option value="economico">Económico</option>
+                                <option v-for="cut in cuts" :key="cut.id" :value="cut.id">
+                                    {{ cut.name }}
+                                </option>
                             </select>
                         </div>
 
-                        <!-- Price Range -->
+                        <!-- Price Range - ACTUALIZADO -->
                         <div>
                             <label class="block text-sm font-medium text-red-700 mb-2">Precio máximo</label>
-                            <input v-model="maxPrice" type="range" min="0" max="100"
+                            <input v-model.number="maxPrice" type="range" min="0" max="10000" step="100"
                                 class="w-full h-2 bg-red-200 rounded-lg appearance-none cursor-pointer slider-red">
-                            <!-- precio con color rojo -->
                             <div class="text-sm text-red-600 mt-1 font-medium">${{ maxPrice }}</div>
                         </div>
 
@@ -151,10 +149,9 @@
             </div>
         </section>
 
-        <!-- Products Grid -->
+        <!-- Products Grid - ACTUALIZADO -->
         <section>
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-                <!-- título de productos con gradiente de rojo -->
                 <h2
                     class="text-3xl font-bold bg-gradient-to-r from-red-700 to-red-900 bg-clip-text text-transparent mb-8 text-center">
                     Nuestros Productos</h2>
@@ -162,10 +159,9 @@
                     <div v-for="product in filteredProducts" :key="product.id"
                         class="bg-card rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden group border border-red-100">
                         <div class="relative">
-                            <img :src="product.image" :alt="product.name"
+                            <img :src="product.image || '/placeholder.svg'" :alt="product.name"
                                 class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
                             <div class="absolute top-2 right-2">
-                                <!-- etiqueta de oferta con tonos de rojo -->
                                 <span v-if="product.isOffer"
                                     class="bg-gradient-to-r from-red-500 to-red-600 text-white px-3 py-1 rounded-full text-xs font-bold shadow-md">
                                     OFERTA
@@ -177,14 +173,16 @@
                             <p class="text-sm text-muted-foreground mb-3">{{ product.description }}</p>
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center gap-2">
-                                    <span v-if="product.originalPrice"
+                                    <span v-if="product.isOffer && product.offerPrice"
                                         class="text-sm text-muted-foreground line-through">
-                                        ${{ product.originalPrice }}
+                                        ${{ product.price }} <!-- Precio original tachado -->
                                     </span>
-                                    <!-- precio con color rojo -->
-                                    <span class="text-lg font-bold text-red-600">${{ product.price }}</span>
+                                    <span class="text-lg font-bold text-red-600">
+                                        ${{ product.isOffer && product.offerPrice ? product.offerPrice : product.price
+                                        }}
+                                    </span>
                                 </div>
-                                <button @click="addToCart(product)" botón agregar con tonos de rojo
+                                <button @click="addToCart(product)"
                                     class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-sm hover:shadow-md">
                                     Agregar
                                 </button>
@@ -194,6 +192,7 @@
                 </div>
             </div>
         </section>
+
 
         <!-- Footer -->
         <footer class="bg-card border-t border-red-200">
@@ -241,13 +240,30 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import { Link } from '@inertiajs/vue3';
+import { Head, Link } from '@inertiajs/vue3';
+
+// Props
+const props = defineProps({
+    products: {
+        type: Array,
+        required: true
+    },
+    categories: {
+        type: Array,
+        required: true
+    },
+    cuts: {
+        type: Array,
+        required: true
+    }
+})
+
 // Reactive data
 const currentSlide = ref(0)
 const cartItems = ref(0)
 const selectedCategory = ref('')
 const selectedCut = ref('')
-const maxPrice = ref(100)
+const maxPrice = ref(10000)
 const searchTerm = ref('')
 
 // Offers data
@@ -269,102 +285,18 @@ const offers = ref([
     }
 ])
 
-// Products data
-const products = ref([
-    {
-        id: 1,
-        name: "Bife de Chorizo Premium",
-        description: "Corte premium, ideal para parrilla",
-        price: 25.99,
-        originalPrice: 32.99,
-        image: "/placeholder.svg?height=200&width=300",
-        category: "res",
-        cut: "premium",
-        isOffer: true
-    },
-    {
-        id: 2,
-        name: "Pechuga de Pollo",
-        description: "Pechuga fresca sin piel",
-        price: 12.50,
-        image: "/placeholder.svg?height=200&width=300",
-        category: "pollo",
-        cut: "especial",
-        isOffer: false
-    },
-    {
-        id: 3,
-        name: "Costillas de Cerdo",
-        description: "Costillas tiernas para barbacoa",
-        price: 18.75,
-        originalPrice: 22.00,
-        image: "/placeholder.svg?height=200&width=300",
-        category: "cerdo",
-        cut: "especial",
-        isOffer: true
-    },
-    {
-        id: 4,
-        name: "Chorizo Casero",
-        description: "Chorizo artesanal de la casa",
-        price: 8.99,
-        image: "/placeholder.svg?height=200&width=300",
-        category: "embutidos",
-        cut: "especial",
-        isOffer: false
-    },
-    {
-        id: 5,
-        name: "Lomo de Res",
-        description: "Corte tierno y jugoso",
-        price: 35.00,
-        image: "/placeholder.svg?height=200&width=300",
-        category: "res",
-        cut: "premium",
-        isOffer: false
-    },
-    {
-        id: 6,
-        name: "Muslos de Pollo",
-        description: "Muslos frescos con hueso",
-        price: 9.50,
-        image: "/placeholder.svg?height=200&width=300",
-        category: "pollo",
-        cut: "economico",
-        isOffer: false
-    },
-    {
-        id: 7,
-        name: "Jamón Serrano",
-        description: "Jamón curado artesanalmente",
-        price: 45.00,
-        image: "/placeholder.svg?height=200&width=300",
-        category: "embutidos",
-        cut: "premium",
-        isOffer: false
-    },
-    {
-        id: 8,
-        name: "Carne Molida Premium",
-        description: "Carne molida de primera calidad",
-        price: 15.99,
-        originalPrice: 18.99,
-        image: "/placeholder.svg?height=200&width=300",
-        category: "res",
-        cut: "especial",
-        isOffer: true
-    }
-])
-
-// Computed properties
 const filteredProducts = computed(() => {
-    return products.value.filter(product => {
-        const matchesCategory = !selectedCategory.value || product.category === selectedCategory.value
-        const matchesCut = !selectedCut.value || product.cut === selectedCut.value
-        const matchesPrice = product.price <= maxPrice.value
+    return props.products.filter(product => {
+        const matchesCategory = !selectedCategory.value || product.category_id == selectedCategory.value
+        const matchesCut = !selectedCut.value || product.cut_id == selectedCut.value
+
+        // Usar el precio correcto (oferta o normal) para la comparación
+        const productPrice = product.isOffer && product.offerPrice ? product.offerPrice : product.price
+        const matchesPrice = productPrice <= maxPrice.value
+
         const matchesSearch = !searchTerm.value ||
             product.name.toLowerCase().includes(searchTerm.value.toLowerCase()) ||
-            product.description.toLowerCase().includes(searchTerm.value.toLowerCase())
+            (product.description && product.description.toLowerCase().includes(searchTerm.value.toLowerCase()))
 
         return matchesCategory && matchesCut && matchesPrice && matchesSearch
     })
@@ -381,12 +313,10 @@ const prevSlide = () => {
 
 const addToCart = (product) => {
     cartItems.value++
-    // Here you would typically add the product to a cart store/state
     console.log('Added to cart:', product.name)
 }
 
 const toggleCart = () => {
-    // Here you would typically open a cart modal or navigate to cart page
     console.log('Toggle cart')
 }
 
