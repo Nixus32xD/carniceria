@@ -50,4 +50,9 @@ class Product extends Model
     {
         return $this->belongsTo(Cut::class);
     }
+
+    public function saleItems()
+    {
+        return $this->hasMany(SaleItem::class);
+    }
 }
