@@ -140,11 +140,12 @@ No tiene formularios, solo visualización de datos para ayudar en la toma de dec
 **Nota:**
 Los formularios de login y registro no se muestran en el menú principal, pero están disponibles en las rutas `/login` y `/register` si necesitas crear una cuenta o iniciar sesión.
 
-## Licencia
+### Licencia
 
 Este proyecto es propiedad de Nicolas Moron
 Queda prohibida la copia, distribución o modificación del código sin autorización expresa del autor.
 
+---
 
 ### Features
 
@@ -163,7 +164,3 @@ Implementacion de whatsapp bussiness para envio de promociones o descuentos y en
 
 **Nota**
 Los del Rol **Administrador** y **Stock** son los que solamente recibiran notificaciones de stock bajo.
-
-
-
-````
