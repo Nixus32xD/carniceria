@@ -348,7 +348,15 @@ const formatDate = (dateString) => {
 };
 
 const formatDateArgentina = (dateString) => {
-    return new Date(dateString).toLocaleString('es-AR', { timeZone: 'America/Argentina/Buenos_Aires' });
+    return new Date(dateString).toLocaleString("es-AR", {
+        timeZone: "America/Argentina/Buenos_Aires",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit"
+    });
 };
 
 const getCustomerName = (sale) => {
@@ -758,7 +766,7 @@ const getCustomerName = (sale) => {
                             <div class="flex flex-col space-y-2">
                                 <p class="text-sm text-gray-500 dark:text-gray-400 uppercase font-semibold">Fecha</p>
                                 <p class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                                    {{ selectedSale.created_at }}
+                                    {{ formatDateArgentina(selectedSale.created_at) }}
                                 </p>
                             </div>
 
