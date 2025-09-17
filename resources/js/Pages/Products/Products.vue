@@ -432,7 +432,7 @@ function confirmDelete(id) {
                                 <label class="block dark:text-white text-sm font-bold mb-2" for="discount">Descuento
                                     (%)</label>
                                 <input v-model.number="form.discount"
-                                    class="shadow appearance-none border rounded w-full py-2 px-3 dark:text-white leading-tight focus:outline-none focus:shadow-outline dark:text-black"
+                                    class="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline dark:text-black"
                                     id="discount" type="number" placeholder="Descuento a aplicar">
                             </div>
                             <div class="dark:text-white">Precio con descuento: <strong class="text-blue-400">${{ finalPrice
