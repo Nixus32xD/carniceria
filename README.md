@@ -107,7 +107,7 @@ Las categorías y cortes permiten organizar y clasificar los productos para una 
 
 Se debe configurar las variables de entorno para habilitar el envio de notificaciones de via mail de bajo stock
 
-    ```bash
+    
     MAIL_MAILER=smtp
     MAIL_HOST=smtp.gmail.com
     MAIL_PORT=587
@@ -116,7 +116,7 @@ Se debe configurar las variables de entorno para habilitar el envio de notificac
     MAIL_ENCRYPTION=tls
     MAIL_FROM_ADDRESS="correo@example.com"
     MAIL_FROM_NAME="Carnicería App"
-    ```
+    
 
 
 **MAIL_PASSWORD** - Esta clave se tiene que habilitar primero con la opcion de configuracion de gmail **contraseña para aplicaciones** despues de activar la *verificacion de dos pasos* en el correo
