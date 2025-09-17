@@ -347,6 +347,10 @@ const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString();
 };
 
+const formatDateArgentina = (dateString) => {
+    return new Date(dateString).toLocaleString('es-AR', { timeZone: 'America/Argentina/Buenos_Aires' });
+};
+
 const getCustomerName = (sale) => {
     if (sale.customer_name) return sale.customer_name;
 
@@ -754,7 +758,7 @@ const getCustomerName = (sale) => {
                             <div class="flex flex-col space-y-2">
                                 <p class="text-sm text-gray-500 dark:text-gray-400 uppercase font-semibold">Fecha</p>
                                 <p class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                                    {{ new Date(selectedSale.created_at).toLocaleString() }}
+                                    {{ formatDateArgentina(selectedSale.created_at) }}
                                 </p>
                             </div>
 
