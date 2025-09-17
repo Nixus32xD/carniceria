@@ -74,10 +74,8 @@ Principalmente no se muestran las rutas `/register` y `/login` pero estan dispon
 
 ## Estructura de rutas
 
--   `/` - Dashboard principal (requiere autenticación)
+-   `/dashboard` - Dashboard principal (requiere autenticación)
 -   `/dashboard/products` - Gestión de productos
--   `/dashboard/categories` - Gestión de categorías
--   `/dashboard/cuts` - Gestión de cortes
 -   `/dashboard/sales` - Registro y visualización de ventas
 -   `/dashboard/analytics` - Análisis y estadísticas
 -   `/profile` - Edición de perfil
@@ -109,14 +107,17 @@ Las categorías y cortes permiten organizar y clasificar los productos para una 
 
 Se debe configurar las variables de entorno para habilitar el envio de notificaciones de via mail de bajo stock
 
-- MAIL_MAILER=smtp
-- MAIL_HOST=smtp.gmail.com
-- MAIL_PORT=587
-- MAIL_USERNAME=correo@example.com
-- MAIL_PASSWORD="clave generica"        
-- MAIL_ENCRYPTION=tls
-- MAIL_FROM_ADDRESS="correo@example.com"
-- MAIL_FROM_NAME="Carnicería App"
+    ```bash
+    MAIL_MAILER=smtp
+    MAIL_HOST=smtp.gmail.com
+    MAIL_PORT=587
+    MAIL_USERNAME=correo@example.com
+    MAIL_PASSWORD="clave generica"
+    MAIL_ENCRYPTION=tls
+    MAIL_FROM_ADDRESS="correo@example.com"
+    MAIL_FROM_NAME="Carnicería App"
+    ```
+
 
 **MAIL_PASSWORD** - Esta clave se tiene que habilitar primero con la opcion de configuracion de gmail **contraseña para aplicaciones** despues de activar la *verificacion de dos pasos* en el correo
 
@@ -131,29 +132,29 @@ En la sección **Sales** puedes:
 
 ### Analytics
 
-La vista **Analytics** muestra gráficos y estadísticas sobre las ventas, productos más vendidos, ingresos y tendencias.  
+La vista **Analytics** muestra gráficos y estadísticas sobre las ventas, productos más vendidos, ingresos y tendencias.
 No tiene formularios, solo visualización de datos para ayudar en la toma de decisiones.
 
 ---
 
-**Nota:**  
+**Nota:**
 Los formularios de login y registro no se muestran en el menú principal, pero están disponibles en las rutas `/login` y `/register` si necesitas crear una cuenta o iniciar sesión.
 
 ## Licencia
 
-Este proyecto es propiedad de Nicolas Moron  
+Este proyecto es propiedad de Nicolas Moron
 Queda prohibida la copia, distribución o modificación del código sin autorización expresa del autor.
 
 
 ### Features
 
 **Gestor de Roles**
-- Administrador: 
+- Administrador:
     - Usuario con todos los permisos y la opcion de habilitar las cuentas para los roles administrativos y dar alta, modificar y baja.
-- Ventas: 
+- Ventas:
     - Usuarios con permisos para la emision de ventas y comprobantes de pagos.
     - Opcion de enviar comprobantes por via mail a los clientes si proporcionan un correo o por via whatsapp
-- Stock: 
+- Stock:
     - Usuarios con permisos para la carga, edicion y eliminacion de productos disponibles.
 
 **Notificacion via whatsapp**
@@ -165,3 +166,4 @@ Los del Rol **Administrador** y **Stock** son los que solamente recibiran notifi
 
 
 
+````
