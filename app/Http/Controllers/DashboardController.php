@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use App\Models\Sale;
 use App\Models\SaleItem;
 use App\Models\Product;
@@ -54,7 +55,7 @@ class DashboardController extends Controller
         $recentOrders = Sale::latest()->take(5)->with('items')->get()->map(function ($sale) {
             return [
                 'id'       => $sale->id,
-                'customer' => $sale->customer_name ?? 'Cliente General',
+                'customer' => Customer::find($sale->customer_id)->name ?? 'Cliente General',
                 'total'    => $sale->total,
                 'items'    => $sale->items->pluck('product_name')->join(', '),
             ];
