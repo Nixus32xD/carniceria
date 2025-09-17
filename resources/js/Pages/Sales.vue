@@ -314,7 +314,7 @@ const exportToCSV = () => {
     const csvData = filteredSales.value.map(sale => [
         sale.id,
         getCustomerName(sale),
-        formatDate(sale.created_at),
+        formatDateArgentina(sale.created_at),
         sale.total,
         sale.payment_method
     ]);
