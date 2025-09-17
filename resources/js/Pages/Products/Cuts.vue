@@ -149,8 +149,8 @@ async function deleteCut(id) {
         </div>
 
         <!-- Modal Corte -->
-        <div v-if="cutModal" class="fixed inset-0 flex items-center justify-center bg-black/50">
-            <div class="bg-white p-6 rounded-lg w-1/3 dark:bg-gray-800">
+        <div v-if="cutModal" class="fixed inset-0 flex items-center justify-center bg-black/50 p-4">
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg w-full max-w-md sm:max-w-lg md:max-w-xl">
                 <h2 class="text-lg font-bold mb-4 dark:text-white">
                     {{ isEditCut ? "Editar Corte" : "Nuevo Corte" }}
                 </h2>
@@ -167,9 +167,9 @@ async function deleteCut(id) {
                         <option v-for="cat in categories" :key="cat.id" :value="cat.id">{{ cat.name }}</option>
                     </select>
 
-                    <div class="mt-4 flex justify-end">
+                    <div class="mt-4 flex justify-end flex-wrap gap-2">
                         <button type="button" @click="closeCutModal"
-                            class="bg-gray-500 text-white px-4 py-2 rounded mr-2 hover:bg-gray-600">Cancelar</button>
+                            class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Cancelar</button>
                         <button type="submit"
                             class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Guardar</button>
                     </div>

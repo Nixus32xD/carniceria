@@ -129,21 +129,19 @@ async function deleteCategory(id) {
         </div>
 
         <!-- Modal Categoría -->
-        <div v-if="categoryModal" class="fixed inset-0 flex items-center justify-center bg-black/50">
-            <div class="bg-white p-6 rounded-lg w-1/3 dark:bg-gray-800">
+        <div v-if="categoryModal" class="fixed inset-0 flex items-center justify-center bg-black/50 p-4">
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg w-full max-w-md sm:max-w-lg md:max-w-xl">
                 <h2 class="text-lg font-bold mb-4 dark:text-white">
                     {{ isEditCategory ? "Editar Categoría" : "Nueva Categoría" }}
                 </h2>
                 <form @submit.prevent="submitCategory">
-                    <label class="block text-sm font-bold mb-2" for="name">
-                        Nombre de la Categoria
-                    </label>
+                    <label class="block text-sm font-bold mb-2" for="name">Nombre de la Categoria</label>
                     <input v-model="categoryForm.name"
                         class="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline dark:text-black"
                         type="text" placeholder="Nombre categoría" />
-                    <div class="mt-4 flex justify-end">
+                    <div class="mt-4 flex justify-end flex-wrap gap-2">
                         <button type="button" @click="closeCategoryModal"
-                            class="bg-gray-500 text-white px-4 py-2 rounded mr-2 hover:bg-gray-600">Cancelar</button>
+                            class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Cancelar</button>
                         <button type="submit"
                             class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Guardar</button>
                     </div>

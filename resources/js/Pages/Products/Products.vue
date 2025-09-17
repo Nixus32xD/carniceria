@@ -377,15 +377,14 @@ function confirmDelete(id) {
 
         <!-- Modal para Crear Producto -->
         <transition name="fade" mode="out-in">
-            <div v-if="createModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center"
+            <div v-if="createModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4"
                 @click.self="closeCreateModal">
-
-                <div class="bg-white p-6 rounded-lg w-1/3 dark:bg-gray-800">
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg w-full max-w-md sm:max-w-lg md:max-w-2xl">
                     <h2 class="text-lg font-bold mb-4 dark:text-white">
                         {{ isEditMode ? "Editar Producto" : "Crear Nuevo Producto" }}
                     </h2>
 
-                    <form @submit.prevent="submitForm">
+                    <form @submit.prevent="submitForm" class="space-y-4">
                         <div class="mb-4 mx-10">
                             <label class="block text-dark text-sm font-bold mb-2" for="name">
                                 Nombre
@@ -490,9 +489,9 @@ function confirmDelete(id) {
                         </div>
 
 
-                        <div class="flex justify-end">
+                        <div class="flex flex-col sm:flex-row justify-end gap-2">
                             <button type="button" @click="closeCreateModal"
-                                class="bg-gray-500 text-white px-4 py-2 rounded mr-2 hover:bg-gray-600">Cancelar</button>
+                                class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Cancelar</button>
                             <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
                                 {{ isEditMode ? "Guardar Cambios" : "Crear" }}
                             </button>
