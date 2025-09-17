@@ -135,11 +135,11 @@ async function deleteCategory(id) {
                     {{ isEditCategory ? "Editar Categoría" : "Nueva Categoría" }}
                 </h2>
                 <form @submit.prevent="submitCategory">
-                    <label class="block text-white text-sm font-bold mb-2" for="name">
+                    <label class="block text-sm font-bold mb-2" for="name">
                         Nombre de la Categoria
                     </label>
                     <input v-model="categoryForm.name"
-                        class="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline dark:text-black"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline dark:text-black"
                         type="text" placeholder="Nombre categoría" />
                     <div class="mt-4 flex justify-end">
                         <button type="button" @click="closeCategoryModal"
