@@ -388,26 +388,26 @@ function confirmDelete(id) {
                     <form @submit.prevent="submitForm" class="space-y-4 px-2 sm:px-10">
                         <!-- Nombre -->
                         <div>
-                            <label class="block text-dark text-sm font-bold mb-2" for="name">Nombre</label>
+                            <label class="block dark:text-white text-sm font-bold mb-2" for="name">Nombre</label>
                             <input v-model="form.name"
-                                class="shadow appearance-none border rounded w-full py-2 px-3 text-dark leading-tight focus:outline-none focus:shadow-outline dark:text-black"
+                                class="shadow appearance-none border rounded w-full py-2 px-3 dark:text-white leading-tight focus:outline-none focus:shadow-outline dark:text-black"
                                 id="name" type="text" placeholder="Nombre del producto">
                         </div>
 
                         <!-- Descripción -->
                         <div>
-                            <label class="block text-dark text-sm font-bold mb-2" for="description">Descripción</label>
+                            <label class="block dark:text-white text-sm font-bold mb-2" for="description">Descripción</label>
                             <textarea v-model="form.description"
-                                class="shadow appearance-none border rounded w-full py-2 px-3 text-dark leading-tight focus:outline-none focus:shadow-outline dark:text-black"
+                                class="shadow appearance-none border rounded w-full py-2 px-3 dark:text-white leading-tight focus:outline-none focus:shadow-outline dark:text-black"
                                 id="description" placeholder="Descripción del producto"></textarea>
                         </div>
 
                         <!-- Oferta -->
                         <div>
-                            <label class="block text-dark text-sm font-bold mb-2" for="isOffer">¿Tiene
+                            <label class="block dark:text-white text-sm font-bold mb-2" for="isOffer">¿Tiene
                                 Descuento?</label>
                             <select v-model="form.isOffer"
-                                class="shadow appearance-none border rounded w-full py-2 px-3 text-dark leading-tight focus:outline-none focus:shadow-outline dark:text-black"
+                                class="shadow appearance-none border rounded w-full py-2 px-3 dark:text-white leading-tight focus:outline-none focus:shadow-outline dark:text-black"
                                 id="isOffer">
                                 <option :value="false">No</option>
                                 <option :value="true">Sí</option>
@@ -416,40 +416,40 @@ function confirmDelete(id) {
 
                         <!-- Precio y descuento -->
                         <div v-if="!form.isOffer">
-                            <label class="block text-dark text-sm font-bold mb-2" for="price">Precio x Kilo</label>
+                            <label class="block dark:text-white text-sm font-bold mb-2" for="price">Precio x Kilo</label>
                             <input v-model.number="form.price"
-                                class="shadow appearance-none border rounded w-full py-2 px-3 text-dark leading-tight focus:outline-none focus:shadow-outline dark:text-black"
+                                class="shadow appearance-none border rounded w-full py-2 px-3 dark:text-white leading-tight focus:outline-none focus:shadow-outline dark:text-black"
                                 id="price" type="number" placeholder="Precio del producto por kilo">
                         </div>
                         <div v-else>
                             <div>
-                                <label class="block text-dark text-sm font-bold mb-2" for="price">Precio x Kilo</label>
+                                <label class="block dark:text-white text-sm font-bold mb-2" for="price">Precio x Kilo</label>
                                 <input v-model.number="form.price"
-                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-dark leading-tight focus:outline-none focus:shadow-outline dark:text-black"
+                                    class="shadow appearance-none border rounded w-full py-2 px-3 dark:text-white leading-tight focus:outline-none focus:shadow-outline dark:text-black"
                                     id="price" type="number" placeholder="Precio del producto por kilo">
                             </div>
                             <div>
-                                <label class="block text-dark text-sm font-bold mb-2" for="discount">Descuento
+                                <label class="block dark:text-white text-sm font-bold mb-2" for="discount">Descuento
                                     (%)</label>
                                 <input v-model.number="form.discount"
-                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-dark leading-tight focus:outline-none focus:shadow-outline dark:text-black"
+                                    class="shadow appearance-none border rounded w-full py-2 px-3 dark:text-white leading-tight focus:outline-none focus:shadow-outline dark:text-black"
                                     id="discount" type="number" placeholder="Descuento a aplicar">
                             </div>
-                            <div class="text-dark">Precio con descuento: <strong class="text-blue-400">${{ finalPrice
+                            <div class="dark:text-white">Precio con descuento: <strong class="text-blue-400">${{ finalPrice
                                     }}</strong></div>
                         </div>
 
                         <!-- Stock -->
                         <div>
-                            <label class="block text-dark text-sm font-bold mb-2" for="stock">Stock</label>
+                            <label class="block dark:text-white text-sm font-bold mb-2" for="stock">Stock</label>
                             <input v-model.number="form.stock"
-                                class="shadow appearance-none border rounded w-full py-2 px-3 text-dark leading-tight focus:outline-none focus:shadow-outline dark:text-black"
+                                class="shadow appearance-none border rounded w-full py-2 px-3 dark:text-white leading-tight focus:outline-none focus:shadow-outline dark:text-black"
                                 id="stock" type="number" placeholder="Cantidad en stock">
                         </div>
 
                         <!-- Categoría y Corte -->
                         <div>
-                            <label class="block text-dark text-sm font-bold mb-2" for="category_id">Categoría</label>
+                            <label class="block dark:text-white text-sm font-bold mb-2" for="category_id">Categoría</label>
                             <select v-model="form.category_id"
                                 class="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline dark:text-black"
                                 id="category_id">
@@ -459,7 +459,7 @@ function confirmDelete(id) {
                         </div>
 
                         <div>
-                            <label class="block text-dark text-sm font-bold mb-2" for="cut_id">Corte</label>
+                            <label class="block dark:text-white text-sm font-bold mb-2" for="cut_id">Corte</label>
                             <select v-model="form.cut_id"
                                 class="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline dark:text-black"
                                 id="cut_id">
