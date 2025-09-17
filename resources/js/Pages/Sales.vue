@@ -758,7 +758,7 @@ const getCustomerName = (sale) => {
                             <div class="flex flex-col space-y-2">
                                 <p class="text-sm text-gray-500 dark:text-gray-400 uppercase font-semibold">Fecha</p>
                                 <p class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                                    {{ formatDateArgentina(selectedSale.created_at) }}
+                                    {{ selectedSale.created_at }}
                                 </p>
                             </div>
 
