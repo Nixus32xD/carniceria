@@ -1,61 +1,129 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Carnicería - Sistema de Gestión
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Este proyecto es una aplicación web desarrollada en Laravel para la gestión de productos, categorías, cortes y ventas en una carnicería.
 
-## About Laravel
+## Características
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+-   Autenticación de usuarios (registro, login, recuperación de contraseña)
+-   Gestión de productos, categorías y cortes
+-   Registro y visualización de ventas
+-   Panel de análisis y estadísticas
+-   Impresión de recibos
+-   Edición de perfil de usuario
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Requisitos
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+-   PHP >= 8.1
+-   Composer
+-   Node.js y npm
+-   Base de datos MySQL/MariaDB
 
-## Learning Laravel
+## Instalación
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+1. Clona el repositorio:
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+    ```bash
+    git clone <URL-del-repositorio>
+    cd carniceria
+    ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+2. Instala dependencias de PHP:
 
-## Laravel Sponsors
+    ```bash
+    composer install
+    ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+3. Instala dependencias de JavaScript:
 
-### Premium Partners
+    ```bash
+    npm install
+    ```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+4. Copia el archivo de entorno y configura tus variables:
 
-## Contributing
+    ```bash
+    cp .env.example .env
+    ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+5. Genera la clave de la aplicación:
 
-## Code of Conduct
+    ```bash
+    php artisan key:generate
+    ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+6. Ejecuta las migraciones:
 
-## Security Vulnerabilities
+    ```bash
+    php artisan migrate --seed
+    ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+7. Inicia el servidor de desarrollo:
+    ```bash
+    php artisan serve
+    ```
+8. Inicia el servidor de estilos:
+    ```bash
+    npm run dev
+    ```
 
-## License
+## Uso
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Accede a la aplicación en [http://localhost:8000](http://localhost:8000) y registra un usuario para comenzar a gestionar la carnicería.
+
+Principalmente no se muestran las rutas `/register` y `/login` pero estan disponibles para crear una cuenta o logearse
+
+## Estructura de rutas
+
+-   `/` - Dashboard principal (requiere autenticación)
+-   `/dashboard/products` - Gestión de productos
+-   `/dashboard/categories` - Gestión de categorías
+-   `/dashboard/cuts` - Gestión de cortes
+-   `/dashboard/sales` - Registro y visualización de ventas
+-   `/dashboard/analytics` - Análisis y estadísticas
+-   `/profile` - Edición de perfil
+
+## Uso de los formularios
+
+La aplicación incluye varios formularios para gestionar productos, ventas, cortes y categorías.  
+A continuación se explica cómo utilizarlos y qué hace cada vista principal:
+
+### Dashboard
+
+La vista **Dashboard** es la página principal tras iniciar sesión.  
+Aquí se muestra un resumen general de la carnicería, como estadísticas rápidas, productos destacados y accesos a las diferentes secciones de gestión.
+
+### Products
+
+En la sección **Products** puedes:
+
+-   **Agregar producto:** Completa el formulario con nombre, categoría, corte, precio y stock. Haz clic en "Guardar" para registrar el producto.
+-   **Editar producto:** Haz clic en el botón de edición junto al producto, modifica los datos (incluyendo categoría y corte) y guarda los cambios.
+-   **Eliminar producto:** Usa el botón de eliminar para quitar un producto de la lista.
+
+-   **Categoría:** Selecciona la categoría del producto (por ejemplo: Vacuno, Cerdo, Pollo, etc.).
+-   **Corte:** Selecciona el tipo de corte correspondiente (por ejemplo: Bife, Costilla, Lomo, etc.).
+
+Las categorías y cortes permiten organizar y clasificar los productos para una gestión más eficiente.
+
+### Sales
+
+En la sección **Sales** puedes:
+
+-   **Registrar una venta:** Selecciona productos, cantidades y completa los datos del cliente si es necesario. Haz clic en "Registrar venta" para guardar la operación.
+-   **Ver detalles de venta:** Haz clic en una venta para ver el detalle de los productos vendidos, el total y la fecha.
+-   **Imprimir recibo:** Usa el botón de imprimir para generar un recibo de la venta.
+
+### Analytics
+
+La vista **Analytics** muestra gráficos y estadísticas sobre las ventas, productos más vendidos, ingresos y tendencias.  
+No tiene formularios, solo visualización de datos para ayudar en la toma de decisiones.
+
+---
+
+**Nota:**  
+Los formularios de login y registro no se muestran en el menú principal, pero están disponibles en las rutas `/login` y `/register` si necesitas crear una cuenta o iniciar sesión.
+
+## Licencia
+
+Este proyecto es propiedad de Nicolas Moron  
+Queda prohibida la copia, distribución o modificación del código sin autorización expresa del autor.
