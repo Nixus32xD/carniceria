@@ -105,6 +105,22 @@ En la sección **Products** puedes:
 
 Las categorías y cortes permiten organizar y clasificar los productos para una gestión más eficiente.
 
+**Notificaciones**
+
+Se debe configurar las variables de entorno para habilitar el envio de notificaciones de via mail de bajo stock
+
+- MAIL_MAILER=smtp
+- MAIL_HOST=smtp.gmail.com
+- MAIL_PORT=587
+- MAIL_USERNAME=correo@example.com
+- MAIL_PASSWORD="clave generica"        
+- MAIL_ENCRYPTION=tls
+- MAIL_FROM_ADDRESS="correo@example.com"
+- MAIL_FROM_NAME="Carnicería App"
+
+**MAIL_PASSWORD** - Esta clave se tiene que habilitar primero con la opcion de configuracion de gmail **contraseña para aplicaciones** despues de activar la *verificacion de dos pasos* en el correo
+
+
 ### Sales
 
 En la sección **Sales** puedes:
@@ -127,3 +143,25 @@ Los formularios de login y registro no se muestran en el menú principal, pero e
 
 Este proyecto es propiedad de Nicolas Moron  
 Queda prohibida la copia, distribución o modificación del código sin autorización expresa del autor.
+
+
+### Features
+
+**Gestor de Roles**
+- Administrador: 
+    - Usuario con todos los permisos y la opcion de habilitar las cuentas para los roles administrativos y dar alta, modificar y baja.
+- Ventas: 
+    - Usuarios con permisos para la emision de ventas y comprobantes de pagos.
+    - Opcion de enviar comprobantes por via mail a los clientes si proporcionan un correo o por via whatsapp
+- Stock: 
+    - Usuarios con permisos para la carga, edicion y eliminacion de productos disponibles.
+
+**Notificacion via whatsapp**
+
+Implementacion de whatsapp bussiness para envio de promociones o descuentos y envio de comprobantes de pago si el cliente lo desea.
+
+**Nota**
+Los del Rol **Administrador** y **Stock** son los que solamente recibiran notificaciones de stock bajo.
+
+
+
