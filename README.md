@@ -23,7 +23,7 @@ Este proyecto es una aplicación web desarrollada en Laravel para la gestión de
 1. Clona el repositorio:
 
     ```bash
-    git clone <URL-del-repositorio>
+    git clone https://github.com/Nixus32xD/carniceria
     cd carniceria
     ```
 
